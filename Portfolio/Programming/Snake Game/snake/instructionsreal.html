@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    @font-face { font-family: Blox2; src: url('/Users/tino/Downloads/blox-brk/Blox2.ttf'); } 
+    @font-face { font-family: Arial Rounded Bold; src: url('/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf'); }
+body{
+    height: auto;
+                width: auto;
+                margin: 10px    ;
+                align-items: center;
+                background-color: rgb(174, 71, 71)
+}
+.grid-container {
+    width: 625px;
+    height: 625px;
+    display: grid;
+    grid-template-columns: 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin 6vmin;
+    background-color: #274965;
+    padding: 1vmin;
+    column-gap: 1vmin;
+    row-gap: 1vmin;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgb(44, 44, 44);
+    border-width: 5px;
+    position: relative; top:10px;
+    box-shadow: 5px 7px rgb(44, 44, 44);
+}
+.grid-item {
+  background-color: #2196F3;
+  border: 2px solid rgba(3, 114, 250, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+}
+        #button1{
+                padding: 7px 15px;
+                border-radius: 12px;
+                border-style: solid;
+                font-size: 14px;
+                font-family: Arial Rounded Bold;
+                border-style: solid;
+                box-shadow: 1px 3px rgb(44, 44, 44);
+                border-color: rgb(44, 44, 44);
+                color: rgb(44, 44, 44);
+                cursor: pointer; 
+                transition-duration: 0.2s;
+                position: relative; top: 30px;
+                display: inline-block;
+            }
+            #button1:hover {
+                background-color: #6493c5;
+                color: white;
+            }
+            #backbutton{
+                font-family: Arial Rounded Bold;
+            }
+            #button2{
+                padding: 7px 15px;
+                border-radius: 12px;
+                border-style: solid;
+                font-size: 14px;
+                font-family: Arial Rounded Bold;
+                border-style: solid;
+                box-shadow: 1px 3px rgb(44, 44, 44);
+                border-color: rgb(44, 44, 44);
+                color: rgb(44, 44, 44);
+                position: relative; top: 30px;
+                display: inline-block;
+            }
+            #button3{
+                padding: 7px 15px;
+                border-radius: 12px;
+                border-style: solid;
+                font-size: 14px;
+                font-family: Arial Rounded Bold;
+                border-style: solid;
+                box-shadow: 1px 3px rgb(44, 44, 44);
+                border-color: rgb(44, 44, 44);
+                color: rgb(44, 44, 44);
+                cursor: pointer; 
+                transition-duration: 0.2s;
+                position: relative; top: 30px; 
+                display: inline-block;
+            }
+            #button3:hover {
+                background-color: #6493c5;
+                color: white;
+            }
+</style>
+</head>
+<center>
+<body>
+    <div class="grid-container">  
+    <canvas id="game-space" width="625" height="625"></canvas>
+    </div>
+    <div>
+    <button onclick="document.location='snake.html'" id="button1">
+        Back to menu
+    </button>
+    <button id="button3" onclick="location.reload()">Stop</button>
+    <button id="button2">Score: 0</button>
+    </div>
+    
+    <script>
+        window.onload=function() { //function starts when window loads
+        gamespace = document.getElementById("game-space");
+        gamecontext = gamespace.getContext("2d");
+        document.addEventListener("keydown",buttonpress);
+        setInterval(game,1000/16);
+        }
+
+        let snake_x = 12;  //snake position on x axis
+        let snake_y = 12;  //snake position on y axis
+        let grid_size = 25;
+        let number_oftiles = 25;   
+        let apple_x = 18;
+        let apple_y = 18;
+        let x_moving = 0;
+        let y_moving = 0;
+        let trail=[];
+        let tail = 5;
+        let counter=0;
+        let end = 0;
+
+        function buttonpress(event) {
+            switch(event.keyCode) {
+                case 37:    //press left arrow
+                    x_moving=-1; y_moving=0;
+                    break;
+                case 38:    //press up arrow
+                    x_moving=0; y_moving=-1;
+                    break;
+                case 39:    //press right arrow
+                    x_moving=1; y_moving=0;
+                    break;
+                case 40:    //press down arrow
+                    x_moving=0; y_moving=1;
+                    break;
+            }
+        }
+        
+        function game() {
+            snake_x += x_moving;    //on buttonpress the values are stored as snake coordinates
+            snake_y += y_moving;
+            if(snake_x < 0) {
+                snake_x = number_oftiles - 1;
+            }
+            if(snake_x > number_oftiles - 1) {
+                snake_x = 0;
+            }
+            if(snake_y < 0) {
+                snake_y = number_oftiles - 1;
+            }
+            if(snake_y > number_oftiles - 1) {
+                snake_y = 0;
+            }
+
+            gamecontext.fillStyle="#274965";//background color
+            
+            gamecontext.fillRect(0, 0, gamespace.width, gamespace.height);
+            gamecontext.fillStyle="#2196F3";//snake
+
+            for(let i=0; i < trail.length; i++) { //this is for movement and if you hit tail the game resets
+                gamecontext.fillRect(trail[i].snake_x * grid_size, trail[i].snake_y * grid_size, grid_size, grid_size); //size of one box of snake
+                if(trail[i].snake_x == snake_x && trail[i].snake_y == snake_y) {
+                    tail=5;
+                    counter = 0;
+                    document.getElementById("button2").innerHTML="Score: "+counter;
+                    end++;
+                }
+            }
+            trail.push({snake_x, snake_y});
+            while(trail.length>5) {
+            trail.shift();
+            }
+        
+            if(apple_x == snake_x && apple_y == snake_y) {
+                tail++;
+                apple_x=Math.floor(Math.random()*number_oftiles);
+                apple_y=Math.floor(Math.random()*number_oftiles);
+                counter++;
+                document.getElementById("button2").innerHTML="Score: "+counter;
+            }
+            gamecontext.fillStyle="lime";
+            gamecontext.fillRect(apple_x * grid_size, apple_y * grid_size, grid_size -6 , grid_size-6); //size of apple
+
+        }
+        </script>
+</body>
+</center>
+</html>
+

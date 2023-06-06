@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Snake</title>
+        <link rel="icon" href="/Users/tino/Downloads/snake.png" type="image/x-icon"/>
+        <style>
+            @font-face { font-family: Blox2; src: url('Blox2.ttf'); } 
+            @font-face { font-family: Arial Rounded Bold; src: url('Arial Rounded Bold.ttf'); }
+            body{
+                background-image:url(wall.png);
+                background-size: 1440px 240%;
+            }
+            
+            #instructionstitle{
+
+                text-align: center;
+
+                font-family: Blox2;
+                font-size: 10vmin;
+                max-width: 670px;
+                color: rgb(44, 44, 44);
+                position:relative; top:80px
+            }
+            
+            bl{
+                width: 90%;
+                 max-width: 600px;
+                color: rgb(43, 37, 92);
+                font-size: 18px;
+                font-family: Arial Rounded Bold ;
+                position: relative; top:80px;
+            }
+            #button1{
+                padding: 14px 72px;
+                border-radius: 12px;
+                border-style: solid;
+                font-size: 18px;
+                font-family: Arial Rounded Bold;
+                border-style: solid;
+                box-shadow: 3px 5px rgb(44, 44, 44);
+                border-color: rgb(44, 44, 44);
+                color: rgb(44, 44, 44);
+                cursor: pointer; 
+                transition-duration: 0.2s;
+                position: relative; top: 150px;
+                
+            }
+            #button1:hover {
+                background-color: #6493c5;
+                color: white;
+            }
+        </style>
+    </head>
+    <center>
+    <body>
+        <div>
+            <h1 id="instructionstitle""> 
+                <span style="color: #2d6b7c;">I</span><span style="color: #24954f;">n</span><span style="color: #9e4646;">s</span><span style="color: #36788b;">t</span><span style="color: #9a823e;">r</span><span style="color: #2d6b7c;">u</span><span style="color: #24954f;">c</span><span style="color: #9e4646;">t</span><span style="color: #36788b;">i</span><span style="color: #2d6b7c;">o</span><span style="color: #24954f;">n</span><span style="color: #9a823e;">s</span>
+            </h1><br>      
+            <bl>
+                <li>
+                    Use arrow keys to control the snake.
+                </li><br>
+                <li>
+                    Collect apples to increase your size!
+                </li><br>
+                <li>
+                    Don't catch yourself in a loop!
+                </li><br>
+                <li>
+                    Have fun!
+                </li>
+            </bl>
+        </div>
+        <div>
+            <img src="snakeee.png" style="max-width: 150px; position:relative; top: 157px; position:relative; left: 10px"> <br>
+            <button onclick="document.location='snake.html'" id="button1">
+                Back
+            </button>
+        </div>
+    </body>
+    </center>
+</html>
